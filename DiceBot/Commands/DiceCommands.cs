@@ -21,11 +21,26 @@ namespace DiceBot {
                     tmp += int.Parse(dice[k]) + "+";
                     break;
                 }
-
-                var die = dice[k].Split('d');
-                var exploding = die[1].EndsWith("!");
-                if (exploding) die[1] = die[1].Remove(die[1].LastIndexOf("!"));
+            
+                var die = dice[k].Split('d');  //lets say dice[1] = 1d10!>9 and means explode on 9 & 10, die[0]=1 & die[1]=10!>9.
+                var exploding = die[1].EndsWith("!"); //var exploding = die[1].Contains("!"); As last char is 9 you have to check the whole string
+                if (exploding) die[1] = die[1].Remove(die[1].LastIndexOf("!"));  //leaves you with 10>9
                 var ammt = int.Parse(die[0]);
+                /*
+                var lowest=0;
+                var doSplit=false;
+                if(die[1].Contains(">")){  //if we need to split it up again. i.e. input was just 1d10! or 1d10!>9
+                    doSplit=true;
+                }
+                var split=die[1].Split(">");
+                var sides=0;
+                if(doSplit){
+                    lowest=int.Parse(split[1]);
+                    sides=int.Parse(split[0]);
+                }else{
+                    sides = int.Parse(die[1]);  //replaces line 44
+                }
+                */
                 var sides = int.Parse(die[1]);
 
                 tmp += "(";
